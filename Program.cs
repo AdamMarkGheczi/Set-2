@@ -5,7 +5,7 @@ namespace Set_2
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Introduceti numarul problemei, sau 0 pentru a opri programul: ");
 
@@ -279,27 +279,42 @@ namespace Set_2
 
         public static void p12()
         {
-            int n, x=0, y, nr = 0;
+            int n, x, y, nr = 0, i=1;
 
             Console.WriteLine("Introduceti n: ");
             n = int.Parse(Console.ReadLine());
 
             Console.WriteLine($"Introduceti numarul");
-            y = int.Parse(Console.ReadLine());
+            x = int.Parse(Console.ReadLine());
+            
+            y = x;
 
-            for (int i = 1; i <= n - 1; i++)
-            {
-                Console.WriteLine($"Introduceti numarul");
-                x = int.Parse(Console.ReadLine());
+            i++;
 
-                if (x == 0 && y != 0) nr++;
+            bool secvence;
 
-                y = x;
+            while(i <= n) 
+            { 
+                secvence = true;
+                while(i<=n)
+                {
+                    y = x;
+                    Console.WriteLine($"Introduceti numarul");
+                    x = int.Parse(Console.ReadLine());
+                    i++;
+
+                    if (x == 0 && y == 0) continue;
+                    if (x == 0) break;
+                    if (x != y + 1) secvence = false;
+
+                }
+
+                if (secvence && !(x == 0 && y == 0)) nr++;
+
             }
 
-            if (x != 0) nr++;
 
-            Console.WriteLine($"In secventa sunt {nr} grupuri de numere separate cu 0");
+            Console.WriteLine($"In secventa sunt {nr} grupuri de numere consecutive separate cu 0");
 
         }
 
@@ -468,27 +483,24 @@ namespace Set_2
 
         public static void p17()
         {
-            int n, x, s = 0, max=0;
+            int sum = 0, max=0;
             bool corect = true;
+            string secv;
 
+            Console.WriteLine("Introduceti secventa intr-o singura linie: ");
+            secv = Console.ReadLine();
 
-            Console.WriteLine("Introduceti n: ");
-            n = int.Parse(Console.ReadLine());
-
-            for (int i = 1; i <= n; i++)
+            for (int i = 0; i < secv.Length; i++)
             {
-                Console.WriteLine($"Introduceti numarul");
-                x = int.Parse(Console.ReadLine());
+                if (secv[i] == '0') sum++;
+                else sum--;
 
-                if (x == 0) s++;
-                else s--;
+                max = Math.Max(sum, max);
 
-                max = Math.Max(s, max);
-
-                if (s < 0) corect = false;
+                if (sum < 0) corect = false;
             }
 
-            if (s > 0) corect = false;
+            if (sum > 0) corect = false;
 
             if (corect)
                 Console.WriteLine($"Secventa este corecta, nivelul maxim de incuibare este {max}");
